@@ -93,7 +93,7 @@ interface Res {
     payload: any;
 }
 
-interface TplOrder {
+interface FlowOrder {
     auditor: string[]
     type: number
     desc: string
@@ -111,5 +111,5 @@ export {
     StepOrder,
     CommonFinder,
     Res,
-    TplOrder
+    FlowOrder
 }

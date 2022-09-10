@@ -88,11 +88,7 @@
                             </FormItem>
                             <FormItem>
                                 <Input style="opacity: 0.6" :placeholder="$t('password')" v-model="formInline.password"
-                                       type="password" @keyup.enter.native="is_verify=true"></Input>
-                            </FormItem>
-                            <FormItem>
-                                <Checkbox v-model="is_open"><span style="color: #FFFFFF;">{{ $t('ldap') }}</span>
-                                </Checkbox>
+                                       type="password" @keyup.enter.native="signIn()"></Input>
                             </FormItem>
                             <FormItem>
                                 <Button long type="primary" ghost @click="signIn"> 登录</Button>
@@ -340,7 +336,7 @@ export default class login extends Mixins(Basic) {
     }
 
     signIn() {
-        LoginApi(this.is_open, {
+        LoginApi({
             username: this.formInline.user,
             password: this.formInline.password
         })

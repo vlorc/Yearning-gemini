@@ -233,6 +233,15 @@ export const appRouter = [
                 component: () => import('./views/manage/flow/flow.vue')
             },
             {
+                path: '/manage/template',
+                name: 'template',
+                meta: {
+                    title: '模板管理'
+                },
+                icon: 'md-paper',
+                component: () => import('./views/manage/template/template.vue')
+            },
+            {
                 path: '/manage/roles',
                 name: 'roles',
                 meta: {

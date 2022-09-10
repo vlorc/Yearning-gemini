@@ -69,7 +69,7 @@ import module_init_args from "@/store/modules/init_args";
 import StepDetail from "@/components/profile/stepDetail.vue";
 import {AxiosResponse} from "axios";
 import {Res} from "@/interface";
-import {TplFetchProfile} from "@/apis/tplApis";
+import {FlowFetchProfile} from "@/apis/flowApis";
 
 @Component({components: {collapse, basic, postForm, Testing, reject, StepDetail}})
 export default class profile extends Mixins(OrderProfileMixins) {
@@ -81,7 +81,7 @@ export default class profile extends Mixins(OrderProfileMixins) {
     user = sessionStorage.getItem('user')
 
     created() {
-        TplFetchProfile(this.order.idc as string)
+        FlowFetchProfile(this.order.idc as string)
             .then((res: AxiosResponse<Res>) => {
                 module_init_args.fetch_order_step(res.data.payload.steps)
             })

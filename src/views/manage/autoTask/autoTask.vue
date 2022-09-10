@@ -109,15 +109,15 @@ export default class autoTask extends Mixins(FetchMixins) {
         tp: [
             {
                 'title': 'Insert',
-                'v': 0
-            },
-            {
-                'title': 'Update',
                 'v': 1
             },
             {
-                'title': 'Delete',
+                'title': 'Update',
                 'v': 2
+            },
+            {
+                'title': 'Delete',
+                'v': 3
             }
         ]
     };
@@ -196,7 +196,7 @@ export default class autoTask extends Mixins(FetchMixins) {
 
     editRecord(vl: any) {
         this.is_edit = false
-        vl.status = vl.status ? 1 : 0
+        vl.status = vl.status ? 1 : 2
         AutoTaskCreateOrEditApi({tp: 'edit', task: vl})
             .then(() => {
                 this.current_page(this.current);
@@ -211,7 +211,7 @@ export default class autoTask extends Mixins(FetchMixins) {
     }
 
     activityStatus(vl: { status: boolean; id: number; }) {
-        AutoTaskCreateOrEditApi({tp: 'active', task: {id: vl.id, status: vl.status ? 1 : 0}})
+        AutoTaskCreateOrEditApi({tp: 'active', task: {id: vl.id, status: vl.status ? 1 : 2}})
     }
 
     fetchTable() {

@@ -13,6 +13,7 @@ interface User {
     real_name: string
     rule: string
     email: string
+    openId: string
 }
 
 interface UserExplorer {

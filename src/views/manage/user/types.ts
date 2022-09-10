@@ -19,6 +19,8 @@ interface UserInfo {
     department: string;
     email: string;
     real_name: string;
+    mobile: string;
+    openId: string;
 }
 
 export {

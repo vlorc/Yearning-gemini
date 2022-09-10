@@ -28,6 +28,12 @@
             <FormItem label="E-mail" prop="email">
                 <Input v-model="edit.email" placeholder="请输入邮箱"></Input>
             </FormItem>
+            <FormItem label="Mobile" prop="mobile">
+                <Input v-model="edit.mobile" placeholder="请输入号码"></Input>
+            </FormItem>
+            <FormItem label="OPENID" prop="mobile">
+                <Input v-model="edit.openId" placeholder="请输入号码"></Input>
+            </FormItem>
         </Form>
     </Modal>
 </template>

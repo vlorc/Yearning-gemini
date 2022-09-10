@@ -13,12 +13,16 @@
                                 <p slot="title">消息推送</p>
                                 <Form :label-width="120">
                                     <FormItem label="webhook地址:">
-                                        <Input placeholder="支持钉钉/企业微信(赞助版本) webhook机器人"
-                                               v-model="message.web_hook"></Input>
+                                        <Input placeholder="Webhook机器人"
+                                               v-model="message.web_hook_url"></Input>
                                     </FormItem>
-                                    <FormItem label="webhook Secret Key:">
-                                        <Input placeholder="钉钉hook secret key"
+                                    <FormItem label="Webhook Secret:">
+                                        <Input placeholder="hook secret"
                                                v-model="message.key"  type="password" password> </Input>
+                                    </FormItem>
+                                    <FormItem label="Webhook Token:">
+                                        <Input placeholder="hook token"
+                                               v-model="message.token"  type="password" password> </Input>
                                     </FormItem>
                                     <FormItem label="邮件SMTP服务地址:">
                                         <Input placeholder="STMP服务 地址" v-model="message.host"></Input>
@@ -45,12 +49,12 @@
                                         </i-switch>
                                     </Form-item>
                                     <Form-item label="webhook推送开关:">
-                                        <i-switch v-model="message.ding" size="large">
+                                        <i-switch v-model="message.web_hook" size="large">
                                             <span slot="open">开</span>
                                             <span slot="close">关</span>
                                         </i-switch>
                                     </Form-item>
-                                    <Button type="primary" @click="message_test('ding')">hook测试</Button>
+                                    <Button type="primary" @click="message_test('web_hook')">hook测试</Button>
                                     <Button type="warning" @click="message_test('mail')" style="margin-left: 5%">邮件测试
                                     </Button>
                                 </Form>
@@ -343,9 +347,9 @@ export default class setting extends Mixins(Basic) {
     mounted() {
         SettingFetchApi()
             .then((res: AxiosResponse<Res>) => {
-                this.message = res.data.payload.Message;
-                this.other = res.data.payload.Other;
-                this.ldap = res.data.payload.Ldap;
+                this.message = res.data.payload.message;
+                this.other = res.data.payload.other;
+                this.ldap = res.data.payload.ldap;
             })
     }
 }

@@ -24,7 +24,7 @@ function ReLoginHandler() {
         loading: true,
         render: loginRender,
         onOk: () => {
-            LoginApi(module_general.openReLogin, {
+            LoginApi( {
                 username: sessionStorage.getItem('user') as string,
                 password: module_general.password
             })

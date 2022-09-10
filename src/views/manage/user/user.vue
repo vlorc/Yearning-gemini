@@ -136,9 +136,19 @@ export default class user_info extends Mixins(Basic) {
             sortable: true
         },
         {
+            title: '号码',
+            key: 'mobile',
+            sortable: true
+        },
+        {
             title: 'email',
             key: 'email',
             sortable: true
+        },
+        {
+            title: 'openId',
+            key: 'openId',
+            sortable: false
         },
         {
             title: '操作',
@@ -156,7 +166,9 @@ export default class user_info extends Mixins(Basic) {
         rule: '',
         department: '',
         email: '',
-        real_name: ''
+        real_name: '',
+        mobile: '',
+        openId: '',
     };
     userLabelValue: Label = {
         username: {name: '用户名'},
@@ -166,6 +178,8 @@ export default class user_info extends Mixins(Basic) {
         department: {name: '部门'},
         email: {name: '电子邮件'},
         real_name: {name: '姓名'},
+        mobile: {name: '号码'},
+        openId: {name: 'OPENID'},
     };
 
     userInfoValidate = {

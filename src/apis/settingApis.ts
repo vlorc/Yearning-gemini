@@ -33,9 +33,7 @@ export function SettingMessageTestApi(tp: string, args: message_modal) {
     return request({
         method: 'put',
         url: SettingCommonPath.basic,
-        data: {
-            mail:args
-        },
+        data: {message: args},
         params: {
             test: tp
         }

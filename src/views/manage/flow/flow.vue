@@ -18,8 +18,8 @@
             </Row>
             <div>
                 <List>
-                    <ListItem v-for="i in tpl_list" :key="i.title">
-                        <ListItemMeta :avatar="tpl_logo"
+                    <ListItem v-for="i in flow_list" :key="i.title">
+                        <ListItemMeta :avatar="flow_logo"
                                       :title="i.title" :description="i.desc"/>
                         <template slot="action">
                             <li>
@@ -44,7 +44,7 @@
                                 transfer>
                                 <Button type="text" size="small">删除</Button>
                             </Poptip>
-                            <Button type="text" size="small" class="margin-left-10" @click="edit_tpl(i,idx)">编辑</Button>
+                            <Button type="text" size="small" class="margin-left-10" @click="edit_flow(i,idx)">编辑</Button>
                         </template>
                     </div>
                 </Step>
@@ -57,26 +57,26 @@
                             <TabPane label="预览编辑" name="preview">
                                 <Form>
                                     <FormItem label="步骤类型">
-                                        <Select v-model="tpl.type" transfer>
+                                        <Select v-model="flow.type" transfer>
                                             <Option label="审核" :value="0"></Option>
                                             <Option label="执行" :value="1"></Option>
                                         </Select>
                                     </FormItem>
                                     <FormItem label="相关人员">
-                                        <Select v-model="tpl.auditor" multiple transfer filterable>
+                                        <Select v-model="flow.auditor" multiple transfer filterable>
                                             <Option v-for="i in multi_list" :key="i.username" :value="i.username"
                                                     :label="i.username"></Option>
                                         </Select>
                                     </FormItem>
                                     <FormItem label="阶段名称">
-                                        <Input v-model="tpl.desc" maxlength="10" show-word-limit></Input>
+                                        <Input v-model="flow.desc" maxlength="10" show-word-limit></Input>
                                     </FormItem>
                                 </Form>
-                                <template v-if="is_tpl_edit">
+                                <template v-if="is_flow_edit">
                                     <Button type="text" size="small" class="margin-left-10"
                                             @click="position_adjustment(true)">向前移动
                                     </Button>
-                                    <Button type="info" size="small" @click="edit_tpl_save" class="margin-left-10">保存
+                                    <Button type="info" size="small" @click="edit_flow_save" class="margin-left-10">保存
                                     </Button>
                                     <Button type="text" size="small" class="margin-left-10"
                                             @click="position_adjustment(false)">向后移动
@@ -104,7 +104,7 @@
             </div>
             <template slot="footer">
                 <Button type="warning" @click="is_open=false">取消</Button>
-                <Button type="primary" @click="post_tpl">确定</Button>
+                <Button type="primary" @click="post_flow">确定</Button>
             </template>
         </Modal>
     </Row>
@@ -113,11 +113,11 @@
 <script lang="ts">
 import {Component, Mixins} from "vue-property-decorator";
 import Basic from "@/mixins/basic";
-import {Res, TplOrder} from '@/interface';
-import {TplAllSourceFetchApi, TplCreateOrEditApi, TplFetchProfile} from "@/apis/tplApis";
+import {Res, FlowOrder} from '@/interface';
+import {FlowAllSourceFetchApi, FlowCreateOrEditApi, FlowFetchProfile} from "@/apis/flowApis";
 import {AxiosResponse} from "axios";
 
-const tpl_step: TplOrder[] = [
+const flow_step: FlowOrder[] = [
     {
         desc: '提交阶段',
         auditor: ['提交人'],
@@ -127,31 +127,31 @@ const tpl_step: TplOrder[] = [
 
 @Component({})
 export default class FlowTemplate extends Mixins(Basic) {
-    tpl_logo = require("../../../assets/tpl.svg")
-    tpl_list: any = []
-    tpl = {} as TplOrder
-    is_tpl_edit = false
+    flow_logo = require("../../../assets/flow.svg")
+    flow_list: any = []
+    flow = {} as FlowOrder
+    is_flow_edit = false
     c_idx = 0
-    tmp_steps: TplOrder[] = []
+    tmp_steps: FlowOrder[] = []
     source = ''
-    tpl_list_all = [] as any
+    flow_list_all = [] as any
 
     clear_data() {
-        this.tpl_list = this.tpl_list_all
+        this.flow_list = this.flow_list_all
     }
 
     search_data() {
-        let tb: any[] = []
-        this.tpl_list.forEach((item: any) => {
+        let fw: any[] = []
+        this.flow_list.forEach((item: any) => {
             if (item.desc.indexOf(this.find.text) !== -1) {
-                tb.push(item)
+                fw.push(item)
             }
         })
-        this.tpl_list = tb
+        this.flow_list = fw
     }
-    edit_tpl(tpl: TplOrder, idx: number) {
-        this.tpl = Object.assign({} as TplOrder, tpl)
-        this.is_tpl_edit = true
+    edit_flow(flow: FlowOrder, idx: number) {
+        this.flow = Object.assign({} as FlowOrder, flow)
+        this.is_flow_edit = true
         this.c_idx = idx
     }
 
@@ -177,53 +177,53 @@ export default class FlowTemplate extends Mixins(Basic) {
         this.tmp_steps.splice(idx, 1)
     }
 
-    edit_tpl_save() {
-        this.tmp_steps[this.c_idx] = this.tpl
-        this.is_tpl_edit = false
-        this.tpl = {} as TplOrder
+    edit_flow_save() {
+        this.tmp_steps[this.c_idx] = this.flow
+        this.is_flow_edit = false
+        this.flow = {} as FlowOrder
     }
 
-    post_tpl() {
+    post_flow() {
         if (this.tmp_steps[this.tmp_steps.length - 1].type !== 1) {
             this.$Message.error({content: "最后步骤必须为执行类型！保存失败!", duration: 5})
             return
         }
 
-        if (this.is_tpl_edit) {
+        if (this.is_flow_edit) {
             this.$Message.error({content: "请先保存被编辑的步骤信息!", duration: 5})
             return
         }
-        TplCreateOrEditApi({steps: this.tmp_steps, source: this.source})
+        FlowCreateOrEditApi({steps: this.tmp_steps, source: this.source})
             .finally(() => {
                 this.is_open = !this.is_open
             })
     }
 
     open_order(vl: string) {
-        TplFetchProfile(vl)
+        FlowFetchProfile(vl)
             .then((res: AxiosResponse<Res>) => {
-                res.data.payload.steps === null ? this.tmp_steps = JSON.parse(JSON.stringify(tpl_step)) : this.tmp_steps = res.data.payload.steps
+                res.data.payload.steps === null ? this.tmp_steps = JSON.parse(JSON.stringify(flow_step)) : this.tmp_steps = res.data.payload.steps
             })
             .finally(() => {
                 this.is_open = !this.is_open
                 this.source = vl
-                this.tpl = {} as TplOrder
+                this.flow = {} as FlowOrder
             })
 
     }
 
     fetch_all_sources() {
-        TplAllSourceFetchApi()
+        FlowAllSourceFetchApi()
             .then((res: AxiosResponse<Res>) => {
                 for (let i of res.data.payload) {
-                    this.tpl_list_all.push({title: i, desc: `${i}数据源审核流程`})
-                    this.tpl_list = this.tpl_list_all
+                    this.flow_list_all.push({title: i, desc: `${i}数据源审核流程`})
+                    this.flow_list = this.flow_list_all
                 }
             })
     }
 
     add_step() {
-        if (this.tpl.type === 1) {
+        if (this.flow.type === 1) {
             for (let i of this.tmp_steps) {
                 if (i.type === 1) {
                     this.$Message.warning({content: '执行阶段仅允许添加一次!'})
@@ -237,8 +237,8 @@ export default class FlowTemplate extends Mixins(Basic) {
             })
             return
         }
-        this.tmp_steps.push({desc: this.tpl.desc, auditor: this.tpl.auditor, type: this.tpl.type})
-        this.tpl = {} as TplOrder
+        this.tmp_steps.push({desc: this.flow.desc, auditor: this.flow.auditor, type: this.flow.type})
+        this.flow = {} as FlowOrder
     }
 
     mounted() {

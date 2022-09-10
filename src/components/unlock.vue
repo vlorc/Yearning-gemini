@@ -24,7 +24,6 @@
           </div>
         </div>
       </div>
-      <div class="unlock-locking-tip-con"><Checkbox v-model="single">LDAP登录</Checkbox>    已锁定</div>
     </div>
   </transition>
 </template>
@@ -39,7 +38,6 @@
                 avatorLeft: '0px',
                 inputLeft: '400px',
                 password: '',
-                single: false
             }
         },
         props: {
@@ -55,7 +53,7 @@
                 this.$refs.inputEle.focus()
             },
             handleUnlock() {
-                LoginApi(this.single,{username:sessionStorage.getItem('user'),password:this.password})
+                LoginApi({ username: sessionStorage.getItem('user'), password: this.password})
                     .then( res => {
                         if (res.data.code === 1301) {
                             this.$Message.error("密码错误!")
