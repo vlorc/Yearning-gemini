@@ -31,8 +31,8 @@
             <FormItem label="Mobile" prop="mobile">
                 <Input v-model="edit.mobile" placeholder="请输入号码"></Input>
             </FormItem>
-            <FormItem label="OPENID" prop="mobile">
-                <Input v-model="edit.openId" placeholder="请输入号码"></Input>
+            <FormItem label="OPENID" prop="openid">
+                <Input v-model="edit.openId" placeholder="请输入OPENID"></Input>
             </FormItem>
         </Form>
     </Modal>

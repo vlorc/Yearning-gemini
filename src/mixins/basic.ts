@@ -129,6 +129,7 @@ export default class Basic extends Vue {
         username: '',
         password: '',
         is_query: 2,
+        proxy: '',
         tp: 1,
         name: '',
         data_base: '',

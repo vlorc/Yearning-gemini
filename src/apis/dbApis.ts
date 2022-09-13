@@ -13,6 +13,7 @@ export interface DB {
     username: string,
     password: string,
     is_query: number
+    proxy: string,
 }
 
 interface DBExplorer {

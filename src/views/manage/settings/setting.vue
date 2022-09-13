@@ -80,6 +80,10 @@
                                         <Input v-model="ldap.type"
                                                placeholder="例如:(&(objectClass=organizationalPerson)(sAMAccountName=%s))，%s为占位符必须存在"></Input>
                                     </FormItem>
+                                    <FormItem label="LDAP_Search admin:">
+                                        <Input v-model="ldap.admin"
+                                               placeholder="例如:(&(objectClass=organizationalPerson)(sAMAccountName=%s))，%s为占位符必须存在"></Input>
+                                    </FormItem>
                                     <FormItem label="LDAP_SCBASE:">
                                         <Input placeholder="LDAP Search Base" v-model="ldap.sc"></Input>
                                     </FormItem>

@@ -236,10 +236,19 @@ export const appRouter = [
                 path: '/manage/template',
                 name: 'template',
                 meta: {
-                    title: '模板管理'
+                    title: '推送模板'
                 },
                 icon: 'md-paper',
                 component: () => import('./views/manage/template/template.vue')
+            },
+            {
+                path: '/manage/proxy',
+                name: 'proxy',
+                meta: {
+                    title: '代理转发'
+                },
+                icon: 'md-globe',
+                component: () => import('./views/manage/proxy/proxy.vue')
             },
             {
                 path: '/manage/roles',

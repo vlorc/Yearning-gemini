@@ -3,13 +3,13 @@
         <Card>
             <p slot="title">
                 <Icon type="md-sync"></Icon>
-                Template
+                Proxy
             </p>
             <Form inline ref="queryForm" :modal="find">
                 <FormItem>
                 </FormItem>
                 <FormItem>
-                    <Button type="warning" @click="createTemplate">新建模板</Button>
+                    <Button type="warning" @click="createProxy">新建代理</Button>
                 </FormItem>
                 <FormItem>
                     <Input placeholder="名称" v-model="find.text"></Input>
@@ -42,7 +42,7 @@
             <Page :total="page_number" show-elevator @on-change="current_page" :page-size="15"
                   :current.sync="current"></Page>
         </Card>
-        <Modal v-model="is_open" title="模板" @on-ok="postTemplate">
+        <Modal v-model="is_open" title="模板" @on-ok="postProxy">
             <Form :model="general" ref="general" :rules="ruleValidate">
                 <FormItem label="名称" prop="name">
                     <Input v-model="general.name" ></Input>
@@ -55,27 +55,19 @@
                         <Option v-for="i in fetchList.drivers" :key="i.v" :value="i.v">{{ i.title }}</Option>
                     </Select>
                 </FormItem>
-                <FormItem label="类型" required>
-                    <Select v-model="general.type">
-                        <Option v-for="i in fetchList.types" :key="i.v" :value="i.v">{{ i.title }}</Option>
-                    </Select>
+                <FormItem label="连接" prop="url">
+                    <Input v-model="general.url" ></Input>
                 </FormItem>
-                <FormItem label="事件" required>
-                    <Select v-model="general.event" clearable multiple filterable>
-                        <Option v-for="i in fetchList.events" :key="i.v" :value="i.v">{{ i.title }}</Option>
-                    </Select>
+                <FormItem label="用户" prop="username">
+                    <Input v-model="general.username" ></Input>
                 </FormItem>
-                <FormItem label="标题" prop="title">
-                    <Input v-model="general.title" ></Input>
+                <FormItem label="密码" prop="password">
+                    <Input v-model="general.password" type="password" password placeholder="请输入密码" ></Input>
                 </FormItem>
-                <FormItem label="内容" prop="body">
-                    <Input type="textarea" :autosize="true" v-model="general.body" ></Input>
+                <FormItem label="密钥" prop="secret">
+                    <Input type="textarea" :autosize="true" v-model="general.secret" ></Input>
                 </FormItem>
-                <FormItem label="通道" required>
-                    <Select v-model="general.channel">
-                        <Option v-for="i in fetchList.channels" :key="i.v" :value="i.v">{{ i.title }}</Option>
-                    </Select>
-                </FormItem>
+                <Button type="info" @click="testProxy()">测试连接</Button>
             </Form>
         </Modal>
     </div>
@@ -85,62 +77,23 @@
 import {Mixins, Component} from "vue-property-decorator";
 import FetchMixins from "@/mixins/fetch";
 import {
-    TemplateCreateOrEditApi, TemplateFetchApi, TemplateMode, TemplateDeleteApi
-} from "@/apis/templateApis";
+    ProxyCreateOrEditApi, ProxyFetchApi, ProxyDeleteApi, ProxyDetailApi,  ProxyMode
+} from "@/apis/proxyApis";
 import {FetchCommonGetApis} from "@/apis/commonApis";
 import {AxiosResponse} from "axios";
 import {Res} from "@/interface";
+import Basic from "@/mixins/basic";
 
 @Component
-export default class Template extends Mixins(FetchMixins) {
+export default class Proxy extends Mixins(FetchMixins) {
     fetchList = {
         source: [],
         drivers: [
             {
-                'title': 'default',
-                'v': 'default'
+                'title': 'ssh',
+                'v': 'ssh'
             }
         ],
-        types: [
-            {
-                'title': 'text',
-                'v': 'text'
-            },
-            {
-                'title': 'html',
-                'v': 'html'
-            },
-            {
-                'title': 'markdown',
-                'v': 'markdown'
-            },
-            {
-                'title': 'json',
-                'v': 'json'
-            }
-        ],
-        channels: [
-            {
-                'title': 'email',
-                'v': 'email'
-            },
-            {
-                'title': 'webhook',
-                'v': 'webhook'
-            }
-        ],
-        events: 	[
-            {"v":"ORDER_EXEC_CREATE",  "title":"工单提交"},
-            {"v":"ORDER_EXEC_PASS",    "title":"工单通过"},
-            {"v":"ORDER_EXEC_REJECT",  "title":"工单拒绝"},
-            {"v":"ORDER_EXEC_SUCCESS", "title":"工单执行成功"},
-            {"v":"ORDER_EXEC_FAILED",  "title":"工单执行失败"},
-            {"v":"ORDER_EXEC_PERFORM", "title":"工单移交"},
-            {"v":"ORDER_EXEC_UNDO",    "title":"工单撤销"},
-            {"v":"ORDER_QUERY_CREATE", "title":"查询申请创建"},
-            {"v":"ORDER_QUERY_PASS",   "title":"查询申请通过"},
-            {"v":"ORDER_QUERY_REJECT", "title":"查询申请拒绝"}
-        ]
     };
     columns = [
         {
@@ -154,18 +107,6 @@ export default class Template extends Mixins(FetchMixins) {
         {
             title: '驱动',
             key: 'driver',
-        },
-        {
-            title: '类型',
-            key: 'type'
-        },
-        {
-            title: '标题',
-            key: 'title'
-        },
-        {
-            title: '通道',
-            key: 'channel'
         },
         {
             title: '更新时间',
@@ -188,17 +129,29 @@ export default class Template extends Mixins(FetchMixins) {
     ];
     datas = [] as any;
 
-    createTemplate() {
+    createProxy() {
         this.is_open = !this.is_open
     }
 
-    postTemplate() {
+    postProxy() {
         let is_validate: any = this.$refs['general'];
         is_validate.validate((valid: boolean) => {
             if (valid) {
-                let v = Object.assign({}, this.general) as TemplateMode;
-                v.event = (v.event as string[]).join(",");
-                TemplateCreateOrEditApi({tp: "create", template: v})
+                ProxyCreateOrEditApi({tp: "create", proxy: Object.assign({}, this.general) as ProxyMode})
+                    .then(() => {
+                        this.current_page(this.current);
+                    })
+            } else {
+                this.$Message.error("请填写相关性信息！")
+            }
+        })
+    }
+
+    testProxy() {
+        let is_validate: any = this.$refs['general'];
+        is_validate.validate((valid: boolean) => {
+            if (valid) {
+                ProxyCreateOrEditApi({tp: "test", proxy: Object.assign({}, this.general) as ProxyMode})
                     .then(() => {
                         this.current_page(this.current);
                     })
@@ -209,7 +162,7 @@ export default class Template extends Mixins(FetchMixins) {
     }
 
     current_page(vl = 1) {
-        TemplateFetchApi({page: vl, find: this.find})
+        ProxyFetchApi({page: vl, find: this.find})
             .then((res: AxiosResponse<Res>) => {
                 this.datas = res.data.payload.data;
                 this.datas.forEach((item: { status: number | boolean; }) => {
@@ -219,23 +172,24 @@ export default class Template extends Mixins(FetchMixins) {
             })
     }
 
-    editRecord(vl: any) {
-        let v = Object.assign({}, vl);
-        v.status = vl.status ? 1 : 2;
-        v.event = (vl.event || "").split(",");
-        this.general = v;
-        this.is_open = true;
+    editRecord(vl: { id: number }) {
+        (this.general as any)= {};
+        ProxyDetailApi(vl.id)
+            .then((res: AxiosResponse<Res>) => {
+                this.general = res.data.payload;
+                this.is_open = true;
+             })
     }
 
     delRecord(vl: { id: number }) {
-        TemplateDeleteApi(vl.id)
-            .then(() => {
-                this.current_page(this.current);
-            })
+        ProxyDeleteApi(vl.id)
+              .then(() => {
+                        this.current_page(this.current);
+                    })
     }
 
     activityStatus(vl: { status: boolean; id: number; }) {
-        TemplateCreateOrEditApi({tp: 'active', template: {id: vl.id, status: vl.status ? 1 : 2}})
+        ProxyCreateOrEditApi({tp: 'active', proxy: {id: vl.id, status: vl.status ? 1 : 2}})
     }
 
     mounted() {

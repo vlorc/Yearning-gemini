@@ -212,8 +212,8 @@ export default class database_manager extends Mixins(Basic) {
         port: {name: '端口'},
         username: {name: '用户名'},
         password: {name: '密码', type: 'password'},
-        is_query: {name: '数据源类型'}
-
+        is_query: {name: '数据源类型'},
+        proxy: {name: '代理别名'},
     }
 
     test_db() {

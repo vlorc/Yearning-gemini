@@ -5,8 +5,8 @@
                 <Form ref="formItem" :model="formItem" :rules="ruleValidate" :label-width="100" id="fontsize">
                     <FormItem label="工单类型:" required>
                         <Select v-model="formItem.tp" @on-change="changedTp">
-                            <Option :value="1" label="DML"></Option>
                             <Option :value="0" label="DDL"></Option>
+                            <Option :value="1" label="DML"></Option>
                         </Select>
                     </FormItem>
                     <FormItem label="环境:" prop="idc">
