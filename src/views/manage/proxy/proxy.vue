@@ -92,6 +92,46 @@ export default class Proxy extends Mixins(FetchMixins) {
             {
                 'title': 'ssh',
                 'v': 'ssh'
+            },
+            {
+                'title': 'http',
+                'v': 'http'
+            },
+            {
+                'title': 'https',
+                'v': 'https'
+            },
+            {
+                'title': 'httpx',
+                'v': 'httpx'
+            },
+            {
+                'title': 'httpsx',
+                'v': 'httpsx'
+            },
+            {
+                'title': 'socks',
+                'v': 'socks'
+            },
+            {
+                'title': 'sockss',
+                'v': 'sockss'
+            },
+            {
+                'title': 'ws',
+                'v': 'ws'
+            },
+            {
+                'title': 'wss',
+                'v': 'wss'
+            },
+            {
+                'title': 'wsx',
+                'v': 'wsx'
+            },
+            {
+                'title': 'wssx',
+                'v': 'wssx'
             }
         ],
     };

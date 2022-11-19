@@ -41,7 +41,7 @@
     @Component({components: {}})
     export default class orderIsPost extends Mixins(Basic) {
         toOriginal() {
-            modules_order.changed_is_dml(false)
+            modules_order.changed_is_dml(true)
             modules_order.clear_order()
             modules_order.changed_always({one: true, two: false, three: false})
         }
