@@ -69,7 +69,7 @@ import {CommonPostApis, CommonPutApis} from "@/apis/queryApis";
 @Component({components: {}})
 export default class work_flow extends Mixins(QueryMixin) {
     stepData = {
-        title: 'Yearning SQL查询系统',
+        title: 'SQL查询系统',
         describe: `欢迎你！ ${sessionStorage.getItem('user')}`
     };
     stepList1 = [

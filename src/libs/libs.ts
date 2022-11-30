@@ -6,7 +6,7 @@ import Message from 'view-design/src/components/message'
 
 let libs: any = {};
 libs.title = function (title: string) {
-    window.document.title = `Yearning || ${title}`
+    window.document.title = `${title}`
 };
 
 libs.random = function (lower: number, upper: number) {

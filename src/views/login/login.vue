@@ -52,7 +52,7 @@
 
 <template>
     <div>
-        <div class="header">
+        <!-- <div class="header">
             <Row type="flex" justify="start" align="middle">
                 <Col span="1">
                     <a href="https://github.com/cookieY/Yearning" target="_blank">
@@ -73,7 +73,7 @@
                     </Button>
                 </Col>
             </Row>
-        </div>
+        </div> -->
         <div style="z-index: 100" class="div-a">
             <Row type="flex">
                 <Col span="3" offset="2">
@@ -98,7 +98,7 @@
                 </Col>
             </Row>
         </div>
-        <div class="footer">
+        <!-- <div class="footer">
             <Row type="flex" justify="start" align="bottom" style="z-index: 999">
                 <Col span="2">
                     <Tooltip content="yearning.io" placement="top-start">
@@ -125,7 +125,7 @@
                     <div style="color: #FFFFFF">{{ $t('tips') }}</div>
                 </Col>
             </Row>
-        </div>
+        </div> -->
         <div class="homepage-hero-module">
             <div class="video-container">
                 <div :style="fixStyle" class="filter">

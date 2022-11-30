@@ -16,7 +16,7 @@
                     <breadcrumb-nav></breadcrumb-nav>
                 </div>
                 <div class="header-avator-con">
-                    <Dropdown trigger="click" @on-click="handleClickUserDropdown">
+                    <!-- <Dropdown trigger="click" @on-click="handleClickUserDropdown">
                         <a href="javascript:void(0)">
                             获得赞助版本/帮助
                             <Icon type="ios-arrow-down"></Icon>
@@ -26,7 +26,7 @@
                             <DropdownItem><a href="https://guide.yearning.io/"
                                              target="_Blank">{{ $t('banner.guide') }}</a></DropdownItem>
                         </DropdownMenu>
-                    </Dropdown>
+                    </Dropdown> -->
                     <div @click="lockScreen" class="lock-screen-btn-con" style="margin-left: 5%">
                         <Tooltip :content="$t('dash.lock')" placement="bottom">
                             <Icon type="md-lock" :size="20"></Icon>
@@ -78,7 +78,7 @@
             <br>
             <p>{{$t('banner.statement.text_9')}}</p>
         </Modal>
-        <Modal v-model="is_open" title="获得赞助版本">
+        <!-- <Modal v-model="is_open" title="获得赞助版本">
             <p>感谢您支持Yearning！Yearning在保证社区版持续开发的基础上为了回馈曾经在Yearning开发道路上提供积极帮助的朋友们，现推出了基于社区版的赞助版本。 </p>
             <p>赞助版基于最新的Yearning社区版本，目前已添加以下功能:</p>
             <br>
@@ -95,7 +95,7 @@
             <br>
             <h6>赞助版本将会持续更新差异化功能/支持更新</h6>
             <h5>2021年度赞助大于300可联系作者(Mail: henry@yearning.io/QQ: 834958386)获取</h5>
-        </Modal>
+        </Modal> -->
     </div>
 </template>
 <script lang="ts">

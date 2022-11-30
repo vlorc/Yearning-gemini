@@ -28,7 +28,7 @@ import QueryMixin from "@/mixins/query";
 @Component({components: {}})
 export default class put_ready extends Mixins(QueryMixin) {
     stepData = {
-        title: 'Yearning SQL查询系统',
+        title: 'SQL查询系统',
         describe: `欢迎你！ ${sessionStorage.getItem('user')}`,
         content: '你的工单已提交审核，请等待审核人批准！'
     };

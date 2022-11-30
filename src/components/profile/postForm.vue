@@ -29,7 +29,7 @@
                 <Divider plain orientation="left">回滚语句</Divider>
                 <Table :columns="roll_column" :data="roll_data"
                        height="200" :show-header="false" size="small"
-                       no-data-text="该工单没有生成回滚语句! 请检查提交工单时是否已选择备份/数据库设置是否正确。<br/>详细情况请访问:https://guide.yearning.io/attention.html"></Table>
+                       no-data-text="该工单没有生成回滚语句! 请检查提交工单时是否已选择备份/数据库设置是否正确。"></Table>
                 <br>
                 <Page :total="page_number" show-elevator @on-change="rollback" :page-size="5"
                       :current.sync="current"></Page>
